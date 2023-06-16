@@ -55,14 +55,14 @@ while repetir:
     print("3. Salir:")
     try:
         opcion1 = int(input("Ingrese el numero de opcion que desea realizar:"))
-    except:
+    except ValueError:
         print('Esa no era una opcion')
         opcion1 = 0
     if opcion1 == 1:
         rect = rectError
         try:
             rect = solicitar_rectangulo()
-        except:
+        except ValueError:
             print('Algo a salido mal con el nuevo rectangulo')
         if rect != rectError:
             rectangulos.append(rect)
