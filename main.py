@@ -17,7 +17,11 @@ def solicitar_rectangulo() -> Rectangulo:
     coordenaday0: int = int(input("Ingrese la coordenada en Y de la esquina inferior izquierdo:"))
     coordenadax1: int = int(input("Ingrese la coordenada en X de la esquina superior derecha:"))
     coordenaday1: int = int(input("Ingrese la coordenada en Y de la esquina superior derecha:"))
-    return Rectangulo(coordenadax0, coordenaday0, coordenadax1, coordenaday1)
+    if coordenadax0 < coordenadax1 or coordenaday0 < coordenaday1:
+        return Rectangulo(coordenadax0, coordenaday0, coordenadax1, coordenaday1)
+    else:
+        print("Ese rectangulo no es posible")
+        return Rectangulo(0, 0, 0, 0)
 
 
 def colisionador(rect1: Rectangulo, rect2: Rectangulo):
@@ -44,13 +48,24 @@ rectangulos: list[Rectangulo] = []
 print("Es necesario crear el primer rectangulo...")
 rectangulos.append(solicitar_rectangulo())
 repetir = True
+rectError = Rectangulo(0, 0, 0, 0)
 while repetir:
     print("1. Agregar otro rectangulo:")
-    print("2. Claular area disyuntiva exclusiva:")
+    print("2. Calcular area disyuntiva exclusiva:")
     print("3. Salir:")
-    opcion1 = int(input("Ingrese el numero de opcion que desea realizar:"))
+    try:
+        opcion1 = int(input("Ingrese el numero de opcion que desea realizar:"))
+    except:
+        print('Esa no era una opcion')
+        opcion1 = 0
     if opcion1 == 1:
-        rectangulos.append(solicitar_rectangulo())
+        rect = rectError
+        try:
+            rect = solicitar_rectangulo()
+        except:
+            print('Algo a salido mal con el nuevo rectangulo')
+        if rect != rectError:
+            rectangulos.append(rect)
     elif opcion1 == 2:
         area = 0
         for rectangulo in rectangulos:
